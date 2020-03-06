@@ -65,7 +65,7 @@ public class MateriaControlador {
 			return new ResponseEntity<>(materia, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

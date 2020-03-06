@@ -2,6 +2,7 @@ package com.proyecto.schoolroom.controladores;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,14 @@ import com.proyecto.schoolroom.entidades.Encargado;
 import com.proyecto.schoolroom.repositorios.EncargadoRepository;
 
 @RestController
+@RequestMapping("/encargados/")
 public class EncargadoControlador {
 
+	@Autowired
 	EncargadoRepository repo;
 	
 	//Elegir Encargado
-	@RequestMapping(value = "/docente/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Encargado> elegirencargado(@PathVariable int id){
 		Encargado encargado = repo.findById(id).get();
 		
@@ -32,27 +35,33 @@ public class EncargadoControlador {
 	}
 	
 	//Lista Encargados
-	@RequestMapping(value = "/docente/", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<Encargado> listaencargado(){
 		return repo.findAll();
 	}
 	
 	//Crear Encargado
-	@RequestMapping(value = "/docente/", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Encargado> crearencargado(@RequestBody Encargado encargado){
 		repo.save(encargado);
 		return new ResponseEntity<>(encargado, HttpStatus.OK);
 	}
 	
 	//Actualizar Encargado
-	@RequestMapping(value = "/docente/", method = RequestMethod.PUT)
-	public ResponseEntity<Encargado> actualizarencargado(@RequestBody Encargado encargado){
-		repo.save(encargado);
-		return new ResponseEntity<>(encargado, HttpStatus.OK);
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Encargado> actualizarencargado(@PathVariable int id, @RequestBody Encargado update){
+		Encargado encargado = repo.findById(id).get();
+		if (encargado != null) {
+			repo.save(update);		
+			return new ResponseEntity<>(encargado, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	//Eliminar Encargado
-	@RequestMapping(value = "/docente/{id}")
+	@RequestMapping(value = "/{id}")
 	public ResponseEntity<Encargado> eliminarencargado(@PathVariable int id){
 		Encargado encargado = repo.findById(id).get();
 		

@@ -1,6 +1,6 @@
 package com.proyecto.schoolroom.controladores;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,23 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.schoolroom.entidades.Grado;
-import com.proyecto.schoolroom.repositorios.GradoRepository;
+import com.proyecto.schoolroom.entidades.Tarea;
+import com.proyecto.schoolroom.repositorios.TareaRepository;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/grados/")
-public class GradoControlador {
+@RequestMapping("/tareas/")
+public class TareaControlador {
 
 	@Autowired
-	GradoRepository repo;
+	TareaRepository repo;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Grado> elegirgrado(@PathVariable int id){
-		Grado grado = repo.findById(id).get();
-		
-		if (grado != null) {
-			return new ResponseEntity<>(grado, HttpStatus.OK);
+	public ResponseEntity<Tarea> elegirtarea(@PathVariable int id){
+		Tarea tarea = repo.findById(id).get();
+		if (tarea != null) {
+			return new ResponseEntity<>(tarea, HttpStatus.OK);
 		}
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -36,21 +35,20 @@ public class GradoControlador {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public Collection<Grado> listagrado(){
+	public List<Tarea> listatarea(){
 		return repo.findAll();
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Grado> creargrado(@RequestBody Grado grado){
-		repo.save(grado);
-		return new ResponseEntity<>(grado, HttpStatus.OK);
+	public ResponseEntity<Tarea> creartarea(@RequestBody Tarea tarea){
+		repo.save(tarea);
+		return new ResponseEntity<>(tarea, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Grado> actualizargrado(@PathVariable int id, @RequestBody Grado update){
-		Grado grado = repo.findById(id).get();
-		
-		if (grado != null) {
+	public ResponseEntity<Tarea> actualizartarea(@PathVariable int id , @RequestBody Tarea update){
+		Tarea tarea = repo.findById(id).get();
+		if (tarea != null) {
 			repo.save(update);
 			return new ResponseEntity<>(update, HttpStatus.OK);
 		}
@@ -59,16 +57,15 @@ public class GradoControlador {
 		}
 	}
 	
-	@RequestMapping(value = "/{id}")
-	public ResponseEntity<Grado> eliminargrado(@PathVariable int id){
-		Grado grado = repo.findById(id).get();
-		
-		if (grado != null) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Tarea> eliminartarea(@PathVariable int id){
+		Tarea tarea = repo.findById(id).get();
+		if (tarea != null) {
 			repo.deleteById(id);
-			return new ResponseEntity<>(grado, HttpStatus.OK);
+			return new ResponseEntity<>(tarea, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 }

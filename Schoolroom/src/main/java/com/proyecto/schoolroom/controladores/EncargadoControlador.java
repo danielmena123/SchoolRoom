@@ -36,7 +36,7 @@ public class EncargadoControlador {
 		}
 	}
 	
-	//Lista Encargados
+	//Listar Encargados
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<Encargado> listaencargado(){
 		return repo.findAll();

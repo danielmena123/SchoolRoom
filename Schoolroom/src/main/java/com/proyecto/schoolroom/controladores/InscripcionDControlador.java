@@ -1,7 +1,6 @@
 package com.proyecto.schoolroom.controladores;
 
  
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ public class InscripcionDControlador {
 	@Autowired
 	InscripcionDRepository repo;
 	
+	//Elegir Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<InscripcionD> elegirinscripcionD(@PathVariable int id){
 		InscripcionD inscripcion = repo.findById(id).get();
@@ -37,11 +37,13 @@ public class InscripcionDControlador {
 		}
 	}
 	
+	//Listar Inscripciones
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<InscripcionD> listainscripcion(){
 		return repo.findAll();
 	}
 	
+	//Nueva Inscripcion
 	@RequestMapping(value = "/", method = RequestMethod.POST)		
 	public ResponseEntity<InscripcionD> crearinscripcion(@RequestBody InscripcionD inscripcion){
 		if (inscripcion != null) {
@@ -53,6 +55,7 @@ public class InscripcionDControlador {
 		}
 	}	
 	
+	//Editar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<InscripcionD> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionD update){
 		InscripcionD inscripcion = repo.findById(id).get();
@@ -65,6 +68,7 @@ public class InscripcionDControlador {
 		}
 	}
 	
+	//Eliminar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<InscripcionD> eliminarinscripcion(@PathVariable int id){
 		InscripcionD inscripcion = repo.findById(id).get();

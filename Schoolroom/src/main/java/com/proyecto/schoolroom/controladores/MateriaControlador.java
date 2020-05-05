@@ -23,6 +23,7 @@ public class MateriaControlador {
 	@Autowired
 	MateriaRepository repo;
 	
+	//Elegir Materia
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Materia> elegirmateria(@PathVariable int id){
 		Materia materia = repo.findById(id).get();
@@ -34,17 +35,20 @@ public class MateriaControlador {
 		}
 	}
 	
+	//Listar Materias
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<Materia> listamateria(){
 		return repo.findAll();
 	}
 	
+	//Nueva Materia
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Materia> crearmateria(@RequestBody Materia materia) {
 		repo.save(materia);
 		return new ResponseEntity<>(materia, HttpStatus.OK);
 	}
 	
+	//Editar Materia
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Materia> actualizarmateria(@PathVariable int id , @RequestBody Materia update){
 		Materia materia = repo.findById(id).get();
@@ -57,6 +61,7 @@ public class MateriaControlador {
 		}
 	}
 	
+	//Eliminar Materia
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Materia> eliminarmateria(@PathVariable int id){
 		Materia materia = repo.findById(id).get();

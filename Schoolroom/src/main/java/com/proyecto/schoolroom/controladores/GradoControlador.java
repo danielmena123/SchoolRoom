@@ -23,6 +23,7 @@ public class GradoControlador {
 	@Autowired
 	GradoRepository repo;
 	
+	//Elegir Grado
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Grado> elegirgrado(@PathVariable int id){
 		Grado grado = repo.findById(id).get();
@@ -35,17 +36,25 @@ public class GradoControlador {
 		}
 	}
 	
+	//Listar Grados
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<Grado> listagrado(){
 		return repo.findAll();
 	}
 	
+	//Nuevo Grados
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Grado> creargrado(@RequestBody Grado grado){
-		repo.save(grado);
-		return new ResponseEntity<>(grado, HttpStatus.OK);
+		if (grado != null) {
+			repo.save(grado);
+			return new ResponseEntity<>(grado, HttpStatus.OK);			
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
+	//Actualizar Grado
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Grado> actualizargrado(@PathVariable int id, @RequestBody Grado update){
 		Grado grado = repo.findById(id).get();
@@ -59,6 +68,7 @@ public class GradoControlador {
 		}
 	}
 	
+	//Eliminar Grado
 	@RequestMapping(value = "/{id}")
 	public ResponseEntity<Grado> eliminargrado(@PathVariable int id){
 		Grado grado = repo.findById(id).get();

@@ -23,6 +23,8 @@ public class InscripcionEControlador {
 	@Autowired
 	InscripcionERepository repo;
 	
+	
+	//Elegir Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<InscripcionE> elegirinscripcionE(@PathVariable int id){
 		InscripcionE inscripcion = repo.findById(id).get();
@@ -34,17 +36,20 @@ public class InscripcionEControlador {
 		}
 	}
 	
+	//Listar Inscripciones
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<InscripcionE> listainscripcion(){
 		return repo.findAll();
 	}
 	
+	//Nueva Inscripcion
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<InscripcionE> crearinscripcion(@RequestBody InscripcionE inscripcion){
 		repo.save(inscripcion);
 		return new ResponseEntity<>(inscripcion, HttpStatus.OK);
 	}
 	
+	//Editar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<InscripcionE> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionE update){
 		InscripcionE inscripcion = repo.findById(id).get();
@@ -57,6 +62,7 @@ public class InscripcionEControlador {
 		}
 	}
 	
+	//Eliminar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<InscripcionE> eliminarinscripcion(@PathVariable int id){
 		InscripcionE inscripcion = repo.findById(id).get();

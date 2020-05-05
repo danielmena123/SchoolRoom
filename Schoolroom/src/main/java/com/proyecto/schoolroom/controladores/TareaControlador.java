@@ -23,6 +23,7 @@ public class TareaControlador {
 	@Autowired
 	TareaRepository repo;
 	
+	//Elegir Tarea
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Tarea> elegirtarea(@PathVariable int id){
 		Tarea tarea = repo.findById(id).get();
@@ -34,17 +35,20 @@ public class TareaControlador {
 		}
 	}
 	
+	//Listar Tarea
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<Tarea> listatarea(){
 		return repo.findAll();
 	}
 	
+	//Nueva Tarea
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Tarea> creartarea(@RequestBody Tarea tarea){
 		repo.save(tarea);
 		return new ResponseEntity<>(tarea, HttpStatus.OK);
 	}
 	
+	//Editar Tarea
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Tarea> actualizartarea(@PathVariable int id , @RequestBody Tarea update){
 		Tarea tarea = repo.findById(id).get();
@@ -57,6 +61,7 @@ public class TareaControlador {
 		}
 	}
 	
+	//Eliminar Tarea
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Tarea> eliminartarea(@PathVariable int id){
 		Tarea tarea = repo.findById(id).get();

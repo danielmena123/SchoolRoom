@@ -45,8 +45,13 @@ public class EncargadoControlador {
 	//Crear Encargado
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Encargado> crearencargado(@RequestBody Encargado encargado){
-		repo.save(encargado);
-		return new ResponseEntity<>(encargado, HttpStatus.OK);
+		if (encargado != null ) {
+			repo.save(encargado);
+			return new ResponseEntity<>(encargado, HttpStatus.OK);			
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	//Actualizar Encargado

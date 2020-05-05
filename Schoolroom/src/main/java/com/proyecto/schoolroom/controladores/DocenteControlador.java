@@ -39,7 +39,7 @@ public class DocenteControlador {
 		
 	}
 	
-	//Lista Docentes
+	//Listar Docentes
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<Docente> listadocente(){
 		return repo.findAll();
@@ -48,8 +48,13 @@ public class DocenteControlador {
 	//Crear Docente
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Docente> creardocente(@RequestBody Docente docente){
-		repo.save(docente);
-		return new ResponseEntity<>(docente, HttpStatus.OK);
+		if (docente != null) {
+			repo.save(docente);
+			return new ResponseEntity<>(docente, HttpStatus.OK);			
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	//Actualizar Docente

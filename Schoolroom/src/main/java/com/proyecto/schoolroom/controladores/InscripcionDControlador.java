@@ -1,5 +1,7 @@
 package com.proyecto.schoolroom.controladores;
 
+ 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.schoolroom.entidades.InscripcionD;
 import com.proyecto.schoolroom.repositorios.InscripcionDRepository;
+
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -39,11 +42,16 @@ public class InscripcionDControlador {
 		return repo.findAll();
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)		
 	public ResponseEntity<InscripcionD> crearinscripcion(@RequestBody InscripcionD inscripcion){
-		repo.save(inscripcion);
-		return new ResponseEntity<>(inscripcion, HttpStatus.OK);
-	}
+		if (inscripcion != null) {
+			repo.save(inscripcion);
+			return new ResponseEntity<>(inscripcion, HttpStatus.OK);			
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}	
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<InscripcionD> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionD update){

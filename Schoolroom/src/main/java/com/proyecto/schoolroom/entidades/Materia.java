@@ -1,6 +1,7 @@
 package com.proyecto.schoolroom.entidades;
 
-import javax.persistence.CascadeType;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,9 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Table
 @Entity
@@ -22,24 +25,29 @@ public class Materia {
 	private int id;
 	@Column
 	private String nombre;
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idseccion")
-		private Seccion seccion;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idgrado")
+	@JsonBackReference("grado")
+		private Grado grado;
+	
+	
+	@OneToMany(mappedBy = "materia")
+	@JsonManagedReference("materia")
+	private List<Tarea> listatarea;
 	//Constructores
 	
 	public Materia() {};
 
-	public Materia(int id, String nombre, Seccion seccion) {
+	public Materia(int id, String nombre, Grado grado) {
 		this.id = id;
 		this.nombre = nombre;
-		this.seccion = seccion;
+		this.grado = grado;
 	}
 	
-	public Materia(String nombre, Seccion seccion) {
+	public Materia(String nombre, Grado grado) {
 		this.nombre = nombre;
-		this.seccion = seccion;
+		this.grado = grado;
 	}
 	
 	//Getters && Setters
@@ -60,12 +68,12 @@ public class Materia {
 		this.nombre = nombre;
 	}
 
-	public Seccion getSeccion() {
-		return seccion;
+	public Grado getSeccion() {
+		return grado;
 	}
 
-	public void setSeccion(Seccion seccion) {
-		this.seccion = seccion;
+	public void setSeccion(Grado grado) {
+		this.grado = grado;
 	}
 	
 }

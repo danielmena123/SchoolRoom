@@ -40,7 +40,7 @@ public class MateriaControlador {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Materia> crearmateria(@RequestBody Materia materia){
+	public ResponseEntity<Materia> crearmateria(@RequestBody Materia materia) {
 		repo.save(materia);
 		return new ResponseEntity<>(materia, HttpStatus.OK);
 	}

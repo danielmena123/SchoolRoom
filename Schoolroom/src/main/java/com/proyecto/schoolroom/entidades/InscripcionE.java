@@ -24,13 +24,17 @@ public class InscripcionE {
 	private int id;
 	@Column
 	private Date fecha_inscripcion;
-	@JsonBackReference
+	
+	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idencargado")
+	@JsonBackReference("encargado")
 		private Encargado encargado;
-	@JsonBackReference
+	
+	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idgrado")
+	@JsonBackReference("grado")
 		private Grado grado;
 	
 	//Constructores

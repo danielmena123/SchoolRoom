@@ -2,7 +2,6 @@ package com.proyecto.schoolroom.entidades;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,9 +27,11 @@ public class Tarea {
 	private Date fecha_entrega;
 	@Column
 	private String descripcion;
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idmateria")
+	@JsonBackReference("materia")
 		private Materia materia;
 	
 	//Constructores

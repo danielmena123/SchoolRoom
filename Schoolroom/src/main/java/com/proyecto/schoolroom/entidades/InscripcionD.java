@@ -2,7 +2,6 @@ package com.proyecto.schoolroom.entidades;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,13 +23,15 @@ public class InscripcionD {
 	private int id;
 	@Column
 	private Date fecha_inscripcion;
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "iddocente")
+	@JsonBackReference("docente")
 		private Docente docente;
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idgrado")
+	@JsonBackReference("grado")
 		private Grado grado;
 	
 	//Constructores

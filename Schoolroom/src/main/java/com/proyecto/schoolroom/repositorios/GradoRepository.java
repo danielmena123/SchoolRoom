@@ -8,4 +8,6 @@ import com.proyecto.schoolroom.entidades.Grado;
 @Repository
 public interface GradoRepository extends JpaRepository<Grado, Integer>{
 
+	public Grado findByCodigo(String codigo);
+	
 }

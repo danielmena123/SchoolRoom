@@ -2,7 +2,6 @@ package com.proyecto.schoolroom.entidades;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,26 +13,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Table
+@Table(name = "INSCRIPCION_ENCARGADOS")
 @Entity
 public class InscripcionE {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column
+	
+	@Column(name = "FECHA_INSCRIPCION", nullable = false, length = 20)
 	private Date fecha_inscripcion;
 	
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idencargado")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ENCARGADO")
 	@JsonBackReference("encargado")
 		private Encargado encargado;
 	
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idgrado")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_GRADO")
 	@JsonBackReference("grado")
 		private Grado grado;
 	
@@ -52,6 +53,20 @@ public class InscripcionE {
 		this.fecha_inscripcion = fecha_inscripcion;
 		this.encargado = encargado;
 		this.grado = grado;
+	}
+	
+	//Metodos
+	
+	@JsonProperty("encargado")
+	private void addEncargado(Integer id) {
+	    this.encargado = new Encargado();
+	    encargado.setId(id);
+	}
+	
+	@JsonProperty("grado")
+	private void addGrado(Integer id) {
+	    this.grado = new Grado();
+	    grado.setId(id);
 	}
 	
 	//Getters && Setters

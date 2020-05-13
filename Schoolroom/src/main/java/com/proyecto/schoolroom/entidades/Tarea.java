@@ -13,44 +13,56 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Table
+@Table(name = "TAREAS")
 @Entity
 public class Tarea {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column
+	
+	@Column(name = "FECHA_ASIGNADA", nullable = false, length = 20)
 	private Date fecha_asignada;
-	@Column
+	
+	@Column(name = "FECHA_ENTREGA", nullable = false, length = 20)
 	private Date fecha_entrega;
-	@Column
+	
+	@Column(name = "DESCRIPCION_TAREA", nullable = false, length = 100)
 	private String descripcion;
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idmateria")
-	@JsonBackReference("materia")
-		private Materia materia;
+	@JoinColumn(name = "ID_INSCRIPCION")
+	@JsonBackReference("inscripcion")
+		private InscripcionM inscripcion;
 	
 	//Constructores
 	
 	public Tarea() {}
 
-	public Tarea(int id, Date fecha_asignada, Date fecha_entrega, String descripcion, Materia materia) {
+	public Tarea(int id, Date fecha_asignada, Date fecha_entrega, String descripcion, InscripcionM inscripcion) {
 		this.id = id;
 		this.fecha_asignada = fecha_asignada;
 		this.fecha_entrega = fecha_entrega;
 		this.descripcion = descripcion;
-		this.materia = materia;
+		this.inscripcion = inscripcion;
 	}
-	
-	public Tarea(Date fecha_asignada, Date fecha_entrega, String descripcion, Materia materia) {
+
+	public Tarea(Date fecha_asignada, Date fecha_entrega, String descripcion, InscripcionM inscripcion) {
 		this.fecha_asignada = fecha_asignada;
 		this.fecha_entrega = fecha_entrega;
 		this.descripcion = descripcion;
-		this.materia = materia;
+		this.inscripcion = inscripcion;
+	}
+
+	//Metodores
+	
+	@JsonProperty("inscripcion")
+	private void addInscripcion(Integer id) {
+	    this.inscripcion = new InscripcionM();
+	    inscripcion.setId(id);
 	}
 	
 	//Getters && Setters
@@ -87,12 +99,14 @@ public class Tarea {
 		this.descripcion = descripcion;
 	}
 
-	public Materia getMateria() {
-		return materia;
+	public InscripcionM getInscripcion() {
+		return inscripcion;
 	}
 
-	public void setMateria(Materia materia) {
-		this.materia = materia;
+	public void setInscripcion(InscripcionM inscripcion) {
+		this.inscripcion = inscripcion;
 	}
+
+	
 	
 }

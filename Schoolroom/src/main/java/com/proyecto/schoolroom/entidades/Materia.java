@@ -2,52 +2,60 @@ package com.proyecto.schoolroom.entidades;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Table
+@Table(name = "MATERIAS")
 @Entity
 public class Materia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column
+	
+	@Column(name = "NOMBRE_MATERIA", nullable = false, length = 60)
 	private String nombre;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idgrado")
-	@JsonBackReference("grado")
-		private Grado grado;
+	@JsonIgnore
+	@OneToMany(mappedBy = "materia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<InscripcionM> inscripcionM;
 	
-	
-	@OneToMany(mappedBy = "materia")
-	@JsonManagedReference("materia")
-	private List<Tarea> listatarea;
 	//Constructores
 	
 	public Materia() {};
 
-	public Materia(int id, String nombre, Grado grado) {
+	public Materia(int id, String nombre) {
 		this.id = id;
 		this.nombre = nombre;
-		this.grado = grado;
 	}
 	
-	public Materia(String nombre, Grado grado) {
+	public Materia(String nombre) {
 		this.nombre = nombre;
-		this.grado = grado;
+	}
+	
+	//Metodos
+	
+	public void addInscripcion(InscripcionM i) {
+		if (!inscripcionM.contains(i)) {
+			inscripcionM.add(i);
+			i.setMateria(this);
+		}
+	}
+	
+	public void deleteInscripcion(InscripcionM i) {
+		if (inscripcionM.contains(i)) {
+			inscripcionM.remove(i);
+			i.setMateria(null);
+		}	
 	}
 	
 	//Getters && Setters
@@ -67,13 +75,4 @@ public class Materia {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	public Grado getSeccion() {
-		return grado;
-	}
-
-	public void setSeccion(Grado grado) {
-		this.grado = grado;
-	}
-	
 }

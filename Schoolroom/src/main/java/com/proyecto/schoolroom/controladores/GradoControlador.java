@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.schoolroom.entidades.Grado;
 import com.proyecto.schoolroom.repositorios.GradoRepository;
+import com.proyecto.schoolroom.servicios.GenerarCodigo;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -80,5 +81,15 @@ public class GradoControlador {
 		else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	//Generar Codigo
+	@RequestMapping(value = "/codigo/", method = RequestMethod.GET)
+	public ResponseEntity<String> generarCodigo() {
+		String cadena = "";
+		GenerarCodigo g = new GenerarCodigo();
+		cadena = g.Aleatorio();
+		
+		return ResponseEntity.ok(cadena);
 	}
 }

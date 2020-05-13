@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.schoolroom.entidades.InscripcionD;
-import com.proyecto.schoolroom.repositorios.InscripcionDRepository;
+import com.proyecto.schoolroom.entidades.InscripcionM;
+import com.proyecto.schoolroom.repositorios.InscripcionMRepository;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/inscripcionesD/")
-public class InscripcionDControlador {
+@RequestMapping("/inscripcionesM/")
+public class InscripcionMControlador {
 
 	@Autowired
-	InscripcionDRepository repo;
+	InscripcionMRepository repo;
 	
 	//Elegir Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<InscripcionD> elegirinscripcionD(@PathVariable int id){
-		InscripcionD inscripcion = repo.findById(id).get();
+	public ResponseEntity<InscripcionM> elegirinscripcionD(@PathVariable int id){
+		InscripcionM inscripcion = repo.findById(id).get();
 		if (inscripcion != null) {
 			return new ResponseEntity<>(inscripcion, HttpStatus.OK);
 		}
@@ -39,13 +39,13 @@ public class InscripcionDControlador {
 	
 	//Listar Inscripciones
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public List<InscripcionD> listainscripcion(){
+	public List<InscripcionM> listainscripcion(){
 		return repo.findAll();
 	}
 	
 	//Nueva Inscripcion
 	@RequestMapping(value = "/", method = RequestMethod.POST)		
-	public ResponseEntity<InscripcionD> crearinscripcion(@RequestBody InscripcionD inscripcion){
+	public ResponseEntity<InscripcionM> crearinscripcion(@RequestBody InscripcionM inscripcion){
 		if (inscripcion != null) {
 			repo.save(inscripcion);
 			return new ResponseEntity<>(inscripcion, HttpStatus.OK);			
@@ -57,8 +57,8 @@ public class InscripcionDControlador {
 	
 	//Editar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<InscripcionD> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionD update){
-		InscripcionD inscripcion = repo.findById(id).get();
+	public ResponseEntity<InscripcionM> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionM update){
+		InscripcionM inscripcion = repo.findById(id).get();
 		if (inscripcion != null) {
 			repo.save(update);
 			return new ResponseEntity<>(update, HttpStatus.OK);
@@ -70,8 +70,8 @@ public class InscripcionDControlador {
 	
 	//Eliminar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<InscripcionD> eliminarinscripcion(@PathVariable int id){
-		InscripcionD inscripcion = repo.findById(id).get();
+	public ResponseEntity<InscripcionM> eliminarinscripcion(@PathVariable int id){
+		InscripcionM inscripcion = repo.findById(id).get();
 		if (inscripcion != null) {
 			repo.deleteById(id);
 			return new ResponseEntity<>(inscripcion, HttpStatus.OK);

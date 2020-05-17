@@ -3,7 +3,6 @@ package com.proyecto.schoolroom.controladores;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,13 +25,12 @@ public class EncargadoControlador {
 	//Elegir Encargado
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Encargado> elegirencargado(@PathVariable int id){
-		Encargado encargado = repo.findById(id).get();
-		
-		if (encargado != null) {
-			return new ResponseEntity<>(encargado, HttpStatus.OK);
+		Encargado e = repo.findById(id).get();		
+		if (e  != null) {
+			return ResponseEntity.ok(e);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
@@ -44,40 +42,39 @@ public class EncargadoControlador {
 	
 	//Crear Encargado
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Encargado> crearencargado(@RequestBody Encargado encargado){
-		if (encargado != null ) {
-			repo.save(encargado);
-			return new ResponseEntity<>(encargado, HttpStatus.OK);			
+	public ResponseEntity<Encargado> crearencargado(@RequestBody Encargado e){
+		if (e != null ) {
+			repo.save(e);
+			return ResponseEntity.ok(e);			
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.noContent().build();
 		}
 	}
 	
 	//Actualizar Encargado
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Encargado> actualizarencargado(@PathVariable int id, @RequestBody Encargado update){
-		Encargado encargado = repo.findById(id).get();
-		if (encargado != null) {
-			repo.save(update);		
-			return new ResponseEntity<>(encargado, HttpStatus.OK);
+	public ResponseEntity<Encargado> actualizarencargado(@PathVariable int id, @RequestBody Encargado e){
+		Encargado n = repo.findById(id).get();
+		if (n != null) {
+			repo.save(e);		
+			return ResponseEntity.ok(e);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
 	//Eliminar Encargado
 	@RequestMapping(value = "/{id}")
 	public ResponseEntity<Encargado> eliminarencargado(@PathVariable int id){
-		Encargado encargado = repo.findById(id).get();
-		
-		if (encargado != null) {
-			repo.delete(encargado);
-			return new ResponseEntity<>(encargado, HttpStatus.OK);
+		Encargado e = repo.findById(id).get();		
+		if (e != null) {
+			repo.deleteById(id);
+			return ResponseEntity.ok(e);
 		}
 		else {
-			return new ResponseEntity<>(encargado, HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 }

@@ -3,7 +3,6 @@ package com.proyecto.schoolroom.controladores;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,17 +25,13 @@ public class DocenteControlador {
 	//Elegir Docente
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Docente> elegirdocente(@PathVariable int id){
-		
-		Docente docente = repo.findById(id).get();
-		
-		if (docente != null) {
-			return new ResponseEntity<>(docente, HttpStatus.OK);
+		Docente d = repo.findById(id).get();		
+		if (d != null) {
+			return ResponseEntity.ok(d);
 		}
-		
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+			return ResponseEntity.notFound().build();
+		}		
 	}
 	
 	//Listar Docentes
@@ -47,40 +42,39 @@ public class DocenteControlador {
 	
 	//Crear Docente
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Docente> creardocente(@RequestBody Docente docente){
-		if (docente != null) {
-			repo.save(docente);
-			return new ResponseEntity<>(docente, HttpStatus.OK);			
+	public ResponseEntity<Docente> creardocente(@RequestBody Docente d){
+		if (d != null) {
+			repo.save(d);
+			return ResponseEntity.ok(d);			
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.noContent().build();
 		}
 	}
 	
 	//Actualizar Docente
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Docente> actualizardocente(@PathVariable int id,@RequestBody Docente update){
-		Docente docente = repo.findById(id).get();
-		if (docente != null) {
-			repo.save(update);
-			return new ResponseEntity<>(docente, HttpStatus.OK);
+	public ResponseEntity<Docente> actualizardocente(@PathVariable int id,@RequestBody Docente d){
+		Docente n = repo.findById(id).get();
+		if (n != null) {
+			repo.save(d);
+			return ResponseEntity.ok(d);
 		}		
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+			return ResponseEntity.notFound().build();			
 		}
 	}
 	
 	//Eliminar Docente
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Docente> eliminardocente(@PathVariable int id){
-		Docente docente = repo.findById(id).get();
-		
-		if (docente != null) {
-			repo.delete(docente);
-			return new ResponseEntity<>(docente, HttpStatus.OK);			
+		Docente d = repo.findById(id).get();		
+		if (d != null) {
+			repo.deleteById(id);;
+			return ResponseEntity.ok(d);			
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 

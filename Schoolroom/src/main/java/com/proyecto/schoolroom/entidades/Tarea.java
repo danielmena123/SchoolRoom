@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Tarea {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name = "FECHA_ASIGNADA", nullable = false, length = 20)
@@ -29,7 +29,7 @@ public class Tarea {
 	@Column(name = "FECHA_ENTREGA", nullable = false, length = 20)
 	private Date fecha_entrega;
 	
-	@Column(name = "DESCRIPCION_TAREA", nullable = false, length = 100)
+	@Column(name = "DESCRIPCION_TAREA", nullable = false, length = 900)
 	private String descripcion;
 	
 	

@@ -3,7 +3,6 @@ package com.proyecto.schoolroom.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +25,12 @@ public class MateriaControlador {
 	//Elegir Materia
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Materia> elegirmateria(@PathVariable int id){
-		Materia materia = repo.findById(id).get();
-		if (materia != null) {
-			return new ResponseEntity<>(materia, HttpStatus.OK);
+		Materia m = repo.findById(id).get();
+		if (m != null) {
+			return ResponseEntity.ok(m);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
@@ -43,34 +42,39 @@ public class MateriaControlador {
 	
 	//Nueva Materia
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Materia> crearmateria(@RequestBody Materia materia) {
-		repo.save(materia);
-		return new ResponseEntity<>(materia, HttpStatus.OK);
+	public ResponseEntity<Materia> crearmateria(@RequestBody Materia m) {
+		if (m != null) {
+			repo.save(m);
+			return ResponseEntity.ok(m);
+		}
+		else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 	//Editar Materia
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Materia> actualizarmateria(@PathVariable int id , @RequestBody Materia update){
-		Materia materia = repo.findById(id).get();
-		if (materia != null) {
-			repo.save(update);
-			return new ResponseEntity<>(update, HttpStatus.OK);
+	public ResponseEntity<Materia> actualizarmateria(@PathVariable int id , @RequestBody Materia m){
+		Materia n = repo.findById(id).get();
+		if (n != null) {
+			repo.save(m);
+			return ResponseEntity.ok(m);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
 	//Eliminar Materia
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Materia> eliminarmateria(@PathVariable int id){
-		Materia materia = repo.findById(id).get();
-		if (materia != null) {
+		Materia m = repo.findById(id).get();
+		if (m != null) {
 			repo.deleteById(id);
-			return new ResponseEntity<>(materia, HttpStatus.OK);
+			return ResponseEntity.ok(m);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 }

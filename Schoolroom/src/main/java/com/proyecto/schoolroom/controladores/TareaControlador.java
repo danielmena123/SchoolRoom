@@ -3,7 +3,6 @@ package com.proyecto.schoolroom.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +25,12 @@ public class TareaControlador {
 	//Elegir Tarea
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Tarea> elegirtarea(@PathVariable int id){
-		Tarea tarea = repo.findById(id).get();
-		if (tarea != null) {
-			return new ResponseEntity<>(tarea, HttpStatus.OK);
+		Tarea t = repo.findById(id).get();
+		if (t != null) {
+			return ResponseEntity.ok(t);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
@@ -43,34 +42,39 @@ public class TareaControlador {
 	
 	//Nueva Tarea
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Tarea> creartarea(@RequestBody Tarea tarea){
-		repo.save(tarea);
-		return new ResponseEntity<>(tarea, HttpStatus.OK);
+	public ResponseEntity<Tarea> creartarea(@RequestBody Tarea t){
+		if (t != null) {	
+			repo.save(t);
+			return ResponseEntity.ok(t);
+		}
+		else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 	//Editar Tarea
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Tarea> actualizartarea(@PathVariable int id , @RequestBody Tarea update){
-		Tarea tarea = repo.findById(id).get();
-		if (tarea != null) {
-			repo.save(update);
-			return new ResponseEntity<>(update, HttpStatus.OK);
+	public ResponseEntity<Tarea> actualizartarea(@PathVariable int id , @RequestBody Tarea t){
+		Tarea n = repo.findById(id).get();
+		if (n != null) {
+			repo.save(t);
+			return ResponseEntity.ok(t);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
 	//Eliminar Tarea
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Tarea> eliminartarea(@PathVariable int id){
-		Tarea tarea = repo.findById(id).get();
-		if (tarea != null) {
+		Tarea t = repo.findById(id).get();
+		if (t != null) {
 			repo.deleteById(id);
-			return new ResponseEntity<>(tarea, HttpStatus.OK);
+			return ResponseEntity.ok(t);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 }

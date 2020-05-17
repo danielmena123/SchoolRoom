@@ -4,7 +4,6 @@ package com.proyecto.schoolroom.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,12 +27,12 @@ public class InscripcionMControlador {
 	//Elegir Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<InscripcionM> elegirinscripcionD(@PathVariable int id){
-		InscripcionM inscripcion = repo.findById(id).get();
-		if (inscripcion != null) {
-			return new ResponseEntity<>(inscripcion, HttpStatus.OK);
+		InscripcionM i = repo.findById(id).get();
+		if (i != null) {
+			return ResponseEntity.ok(i);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
@@ -45,39 +44,39 @@ public class InscripcionMControlador {
 	
 	//Nueva Inscripcion
 	@RequestMapping(value = "/", method = RequestMethod.POST)		
-	public ResponseEntity<InscripcionM> crearinscripcion(@RequestBody InscripcionM inscripcion){
-		if (inscripcion != null) {
-			repo.save(inscripcion);
-			return new ResponseEntity<>(inscripcion, HttpStatus.OK);			
+	public ResponseEntity<InscripcionM> crearinscripcion(@RequestBody InscripcionM i){
+		if (i != null) {
+			repo.save(i);
+			return ResponseEntity.ok(i);			
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.noContent().build();
 		}
 	}	
 	
 	//Editar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<InscripcionM> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionM update){
-		InscripcionM inscripcion = repo.findById(id).get();
-		if (inscripcion != null) {
-			repo.save(update);
-			return new ResponseEntity<>(update, HttpStatus.OK);
+	public ResponseEntity<InscripcionM> actualizarinscripcion(@PathVariable int id, @RequestBody InscripcionM i){
+		InscripcionM n = repo.findById(id).get();
+		if (n != null) {
+			repo.save(i);
+			return ResponseEntity.ok(i);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 	
 	//Eliminar Inscripcion
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<InscripcionM> eliminarinscripcion(@PathVariable int id){
-		InscripcionM inscripcion = repo.findById(id).get();
-		if (inscripcion != null) {
+		InscripcionM i = repo.findById(id).get();
+		if (i != null) {
 			repo.deleteById(id);
-			return new ResponseEntity<>(inscripcion, HttpStatus.OK);
+			return ResponseEntity.ok(i);
 		}
 		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 		}
 	}
 }

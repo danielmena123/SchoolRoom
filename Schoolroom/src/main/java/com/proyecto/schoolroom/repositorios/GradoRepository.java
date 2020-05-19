@@ -13,6 +13,6 @@ public interface GradoRepository extends JpaRepository<Grado, Integer>{
 	public Grado findByCodigo(String codigo);
 	
 	@Query(value = "select seccion from grados where numero_grado = ?1", nativeQuery = true)
-	public List<String> findBynum_grado(int num_grado);
+	public List<String> findBynum_grado(int id);
 	
 }

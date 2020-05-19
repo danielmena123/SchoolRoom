@@ -23,8 +23,8 @@ public class Grado{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "NUMERO_GRADO", nullable = false, length = 20)
-	private int num_grado;
+	@Column(name = "NUMERO_GRADO", nullable = false, length = 50)
+	private String num_grado;
 	
 	@Column(name = "SECCION", nullable = false, length = 2)
 	private String seccion;
@@ -43,14 +43,14 @@ public class Grado{
 	
 	public Grado() {}
 
-	public Grado(int id, int num_grado, String seccion, String codigo) {
+	public Grado(int id, String num_grado, String seccion, String codigo) {
 		this.id = id;
 		this.num_grado = num_grado;
 		this.seccion = seccion;
 		this.codigo = codigo;
 	}
 	
-	public Grado(int num_grado, String seccion, String codigo) {
+	public Grado(String num_grado, String seccion, String codigo) {
 		this.num_grado = num_grado;
 		this.seccion = seccion;
 		this.codigo = codigo;
@@ -96,11 +96,11 @@ public class Grado{
 		this.id = id;
 	}
 
-	public int getNum_grado() {
+	public String getNum_grado() {
 		return num_grado;
 	}
 
-	public void setNum_grado(int num_grado) {
+	public void setNum_grado(String num_grado) {
 		this.num_grado = num_grado;
 	}
 

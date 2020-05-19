@@ -30,6 +30,9 @@ public class Docente {
 	@Column(name = "CORREO_ELECTRONICO_DOCENTE", nullable = false, length = 50)
 	private String correo_electronico;
 	
+	@Column(name = "CONTRASEÑA_DOCENTE", nullable = false, length = 20)
+	private String password;
+		
 	@JsonIgnore
 	@OneToMany(mappedBy = "docente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<InscripcionM> inscripcion;
@@ -38,17 +41,19 @@ public class Docente {
 	
 	public Docente() {}
 
-	public Docente(int id, String nombres, String apellidos, String correo_electronico) {
+	public Docente(int id, String nombres, String apellidos, String correo_electronico, String password) {
 		this.id = id;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.correo_electronico = correo_electronico;
+		this.password = password;
 	}
 	
-	public Docente(String nombres, String apellidos, String correo_electronico) {
+	public Docente(String nombres, String apellidos, String correo_electronico, String password) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.correo_electronico = correo_electronico;
+		this.password = password;
 	}
 	
 	//Metodos
@@ -99,6 +104,14 @@ public class Docente {
 
 	public void setCorreo_electronico(String correo_electronico) {
 		this.correo_electronico = correo_electronico;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
